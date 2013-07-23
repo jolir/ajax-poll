@@ -12,7 +12,8 @@
 		<div class="span9">
 			<h5><?= $poll['title']; ?></h5>
 			<p><?= $poll['description']; ?></p>
-			<form action="votes/cast_vote" method="post">
+			<form action="polls/cast_vote" method="post">
+				<input type="hidden" name="form_action" value="vote">
 <? 				foreach($choices as $choice)
 		        {
 		        	if($choice['poll_id'] == $poll['id'])

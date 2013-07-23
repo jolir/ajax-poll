@@ -12,6 +12,17 @@ class Polls extends Main {
 		$this->view_data['choices'] = $this->Choice->get_choice();
 		$this->load->view('poll_index', $this->view_data);
 	}
+
+	public function cast_vote()
+	{
+		$post_data = $this->input->post();
+
+		if($post_data['form_action'] == "vote")
+		{
+			$this->load->model('Choice');
+			$this->view_data['choices'] = $this->Choice->vote($post_data['choice']);
+		}
+	}
 }
 
 /* End of file polls.php */
