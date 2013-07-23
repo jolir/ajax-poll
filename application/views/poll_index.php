@@ -5,13 +5,13 @@
 	<script type="text/javascript" src="assets/js/jquery.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$('#cast_vote').submit(function(){
+			$('.cast_vote').submit(function(){
 				var form = $(this);
 
 				$.post(form.attr('action'), form.serialize(), function(data){
-					console.log(data);
 
-						$('#percentage').html(data.html);
+					if(data.status)
+						form.siblings('.percentage').eq(0).html(data.html);
 
 						// $('#message_box').addClass('alert alert-error').html(data.error_message)
 
@@ -31,7 +31,7 @@
 		<div class="span9">
 			<h5><?= $poll['title']; ?></h5>
 			<p><?= $poll['description']; ?></p>
-			<form id="cast_vote" action="polls/cast_vote" method="post">
+			<form class="cast_vote" action="polls/cast_vote" method="post">
 				<input type="hidden" name="form_action" value="vote">
 				<input type="hidden" name="poll_id" value="<?= $poll['id']; ?>">
 				<? $total = NULL; ?>
@@ -52,7 +52,7 @@
 			</form>
 
 			<h4>Results:</h4>
-			<div id="percentage">
+			<div class="percentage">
 <? 				foreach($choices as $choice)
 				{
 					if($choice['poll_id'] == $poll['id'])

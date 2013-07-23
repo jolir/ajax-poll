@@ -21,33 +21,31 @@ class Polls extends Main {
 		{
 			$this->load->model('Choice');
 
-			$data = $this->Choice->vote($post_data['choice']);
+			$data['vote'] = $this->Choice->vote($post_data['choice']);
 
-			if($data)
+			if($data['vote'])
 			{
 
-				 $choices = $this->Choice->get_choice($post_data['poll_id']);
+				$choices = $this->Choice->get_choice($post_data['poll_id']);
 				$total = null;
 				foreach($choices as $choice)
 		        {
 		        	$total += $choice['votes'];
 				}
 
-
-
-				$this->view_data['status'] = TRUE;
-				$this->view_data['html'] = '';
+				$data['status'] = TRUE;
+				$data['html'] = '';
 				foreach($choices as $choice)
 				{
 					$percentage = ($choice['votes'] / $total) * 100;
 					$percentage_formatted = number_format($percentage, 2, '.', '');
-					$this->view_data['html'] .= "<strong>".$choice['choice_text']."</strong><span class='pull-right'>". $percentage_formatted."%</span>
+					$data['html'] .= "<strong>".$choice['choice_text']."</strong><span class='pull-right'>". $percentage_formatted."%</span>
 					<div class='progress progress-danger active'>
 						<div class='bar' style='width: ".$percentage_formatted."%'></div>
 					</div>";
 					
 				}
-				echo json_encode($this->view_data);
+				echo json_encode($data);
 			}
 			
 		}
