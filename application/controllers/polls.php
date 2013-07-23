@@ -13,6 +13,32 @@ class Polls extends Main {
 		$this->load->view('poll_index', $this->view_data);
 	}
 
+	public function poll_new()
+	{
+		$post_data = $this->input->post();
+
+		if(isset($post_data['form_action']) && $post_data['form_action'] == "create_poll")
+		{
+			$this->load->model('Poll');
+			$data['create_poll'] = $this->Poll->create_poll($post_data);
+
+			if($data['create_poll'])
+			{
+				$data['status'] = TRUE;
+				$data['message'] = "Successfully added a new Poll!";
+			}
+			else
+			{
+				$data['status'] = FALSE;
+				$data['error'] = "Error adding poll";
+			}
+
+			echo json_encode($data);
+		}
+		else
+			$this->load->view('poll_new');
+	}
+
 	public function cast_vote()
 	{
 		$post_data = $this->input->post();
@@ -25,7 +51,6 @@ class Polls extends Main {
 
 			if($data['vote'])
 			{
-
 				$choices = $this->Choice->get_choice($post_data['poll_id']);
 				$total = null;
 				foreach($choices as $choice)
@@ -39,18 +64,19 @@ class Polls extends Main {
 				{
 					$percentage = ($choice['votes'] / $total) * 100;
 					$percentage_formatted = number_format($percentage, 2, '.', '');
-					$data['html'] .= "<strong>".$choice['choice_text']."</strong><span class='pull-right'>". $percentage_formatted."%</span>
-					<div class='progress progress-danger active'>
-						<div class='bar' style='width: ".$percentage_formatted."%'></div>
-					</div>";
-					
+					$data['html'] .= 
+						"<strong>".$choice['choice_text']."</strong><span class='pull-right'>". "<b>".$choice['votes']." votes / </b>".$percentage_formatted."%</span>
+						<div class='progress progress-danger active'>
+							<div class='bar' style='width: ".$percentage_formatted."%'></div>
+						</div>";
 				}
-				echo json_encode($data);
 			}
-			
+			else
+				$data['status'] = FALSE;
+
+			echo json_encode($data);
 		}
 	}
-
 }
 
 /* End of file polls.php */
