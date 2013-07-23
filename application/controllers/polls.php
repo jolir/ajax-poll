@@ -20,9 +20,39 @@ class Polls extends Main {
 		if($post_data['form_action'] == "vote")
 		{
 			$this->load->model('Choice');
-			$this->view_data['choices'] = $this->Choice->vote($post_data['choice']);
+
+			$data = $this->Choice->vote($post_data['choice']);
+
+			if($data)
+			{
+
+				 $choices = $this->Choice->get_choice($post_data['poll_id']);
+				$total = null;
+				foreach($choices as $choice)
+		        {
+		        	$total += $choice['votes'];
+				}
+
+
+
+				$this->view_data['status'] = TRUE;
+				$this->view_data['html'] = '';
+				foreach($choices as $choice)
+				{
+					$percentage = ($choice['votes'] / $total) * 100;
+					$percentage_formatted = number_format($percentage, 2, '.', '');
+					$this->view_data['html'] .= "<strong>".$choice['choice_text']."</strong><span class='pull-right'>". $percentage_formatted."%</span>
+					<div class='progress progress-danger active'>
+						<div class='bar' style='width: ".$percentage_formatted."%'></div>
+					</div>";
+					
+				}
+				echo json_encode($this->view_data);
+			}
+			
 		}
 	}
+
 }
 
 /* End of file polls.php */
