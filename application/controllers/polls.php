@@ -30,23 +30,24 @@ class Polls extends Main {
 			$this->form_validation->set_rules('poll_choice4', 'Poll 4', 'trim|required|xss_clean');
 			if($this->form_validation->run() === FALSE)
 			{
-				$this->view_data['status'] = FALSE;
-				$this->view_data['errors'] = validation_errors();
-			}
-
-			$data['create_poll'] = $this->Poll->create_poll($post_data);
-
-			if($data['create_poll'])
-			{
-				$data['status'] = TRUE;
-				$data['message'] = "Successfully added a new Poll!";
+				$data['status'] = FALSE;
+				$data['errors'] = validation_errors();
 			}
 			else
 			{
-				$data['status'] = FALSE;
-				$data['error'] = "Error adding poll";
-			}
+				$data['create_poll'] = $this->Poll->create_poll($post_data);
 
+				if($data['create_poll'])
+				{
+					$data['status'] = TRUE;
+					$data['message'] = "Successfully added a new Poll!";
+				}
+				else
+				{
+					$data['status'] = FALSE;
+					$data['errors'] = "Error adding poll";
+				}
+			}
 			echo json_encode($data);
 		}
 		else

@@ -12,7 +12,7 @@
 					if(data.status)
 						$("#notify").html(data.message)
 					else
-						$("#notify").html(data.error)
+						$("#notify").html(data.errors)
 				}, 'json');
 				return false;
 			});
