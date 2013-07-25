@@ -20,6 +20,20 @@ class Polls extends Main {
 		if(isset($post_data['form_action']) && $post_data['form_action'] == "create_poll")
 		{
 			$this->load->model('Poll');
+			$this->load->library('form_validation');
+
+			$this->form_validation->set_rules('poll_title', 'Title', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('poll_description', 'Description', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('poll_choice1', 'Poll 1', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('poll_choice2', 'Poll 2', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('poll_choice3', 'Poll 3', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('poll_choice4', 'Poll 4', 'trim|required|xss_clean');
+			if($this->form_validation->run() === FALSE)
+			{
+				$this->view_data['status'] = FALSE;
+				$this->view_data['errors'] = validation_errors();
+			}
+
 			$data['create_poll'] = $this->Poll->create_poll($post_data);
 
 			if($data['create_poll'])

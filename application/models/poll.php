@@ -16,11 +16,12 @@ class Poll extends CI_Model {
 	{
 		$this->load->helper('date');
 		$poll_data = array(
-					"title" => $poll_information['poll_title'],
-					"description" => $poll_information['poll_description'],
-					"created_at" => date("Y-m-d H:i:s"),
-					"updated_at" => date("Y-m-d H:i:s")
-				);
+						"title" => $poll_information['poll_title'],
+						"description" => $poll_information['poll_description'],
+						"created_at" => date("Y-m-d H:i:s"),
+						"updated_at" => date("Y-m-d H:i:s")
+					);
+
 		$this->db->insert('polls', $poll_data);
 		
 		$poll_id = $this->db->insert_id();
@@ -51,7 +52,7 @@ class Poll extends CI_Model {
 								"updated_at" => date("Y-m-d H:i:s")
 							)
 					   );
-		return $this->db->insert_batch('choices', $choice_data);
 
+		return $this->db->insert_batch('choices', $choice_data);
 	}
 }

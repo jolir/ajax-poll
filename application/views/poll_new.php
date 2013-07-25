@@ -22,7 +22,7 @@
 <body>
 <div class="row-fluid">
 	<a class="btn btn-primary" href="<?= base_url(); ?>polls">View all Polls</a>
-	<form class="form-horizontal" method="post" action="../polls/poll_new" id="add_poll">
+	<form class="form-horizontal" method="post" action="<?= base_url(); ?>polls/poll_new" id="add_poll">
 		<fieldset>
 			<div id="legend">
 				<legend class="">Create New Poll</legend>
@@ -31,7 +31,7 @@
 			<div class="control-group">
 				<label class="control-label" for="poll_title">Poll Title</label>
 				<div class="controls">
-					<input type="text" id="poll_title" name="poll_title" placeholder="" class="input-xlarge">
+					<input required type="text" id="poll_title" name="poll_title" placeholder="" class="input-xlarge">
 					<input type="hidden" name="form_action" value="create_poll">
 				</div>
 			</div>
@@ -39,35 +39,35 @@
 			<div class="control-group">
 				<label class="control-label" for="poll_description">Poll Description</label>
 				<div class="controls">
-					<textarea name="poll_description"></textarea>
+					<textarea required name="poll_description"></textarea>
 				</div>
 			</div>
 
 			<div class="control-group">
-				<label class="control-label" for="password">Poll Choice 1: </label>
+				<label class="control-label" for="poll_choice1">Poll Choice 1: </label>
 				<div class="controls">
-					<input type="text" name="poll_choice1">
+					<input required type="text" name="poll_choice1">
 				</div>
 			</div>
 
 			<div class="control-group">
-				<label class="control-label" for="password">Poll Choice 2: </label>
+				<label class="control-label" for="poll_choise2">Poll Choice 2: </label>
 				<div class="controls">
-					<input type="text" name="poll_choice2">
+					<input required type="text" name="poll_choice2">
 				</div>
 			</div>
 
 			<div class="control-group">
-				<label class="control-label" for="password">Poll Choice 3: </label>
+				<label class="control-label" for="poll_choice3">Poll Choice 3: </label>
 				<div class="controls">
-					<input type="text" name="poll_choice3">
+					<input required type="text" name="poll_choice3">
 				</div>
 			</div>
 
 			<div class="control-group">
-				<label class="control-label" for="password">Poll Choice 4: </label>
+				<label class="control-label" for="poll_choice4">Poll Choice 4: </label>
 				<div class="controls">
-					<input type="text" name="poll_choice4">
+					<input required type="text" name="poll_choice4">
 				</div>
 			</div>
 
